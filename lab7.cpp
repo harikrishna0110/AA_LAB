@@ -1,47 +1,62 @@
 //Rabin-Karp ALgorithm
-#include <bits/stdc++.h>
+#include<bits/stdc++.h>
 using namespace std;
 
-int main()
-{
-    string text, pattern;
-    cout << "Enter Text" << endl;
-    cin >> text;
-    cout << "Enter pattern" << endl;
-    cin >> pattern;
-    cout << text << pattern << endl;
-    int n = text.length();
-    int m = pattern.length();
-    int d = 10;
-    int q = 13;
-    int h = pow(d, m - 1);
-    h = h % q;
-    int p = 0;
-    int t = 0;
-    for (int i = 0; i <= m - 1; i++)
-    {
-        p = (d * p + pattern[i]) % q;
-        t = (d * t + text[i]) % q;
-    }
 
-    for (int i = 0; i <= (n - m); i++)
-    {
-        if (p = t && pattern == text.substr(i, m))
-        {
-            cout << "Pattern occurs with shift " << i << endl;
-        }
-        if (i < (n - m))
-        {
-            t = (d * (t - text[i + 1] * h) + text[i + m + 1]) % q;
-        }
-        if (t < 0)
-        {
-            t = t + q;
-        }
-    }
-
-    return 0;
+void rabin_karp(string t,string p,int d,int q){
+	int n = t.length();
+	int m = p.length();
+	
+	
+	int pq=0,t0=0;
+	// int a=0;
+	
+	for(int i=0;i<m;i++){
+		t0 = (d*t0 + (t[i] -'0'))%q;
+		pq = (d*pq + (p[i]-'0'))%q;
+	}
+	// cout<<pq<<" "<<t0<<endl;
+	
+	int h = pow(d,m-1);
+	int f1=0;
+	for(int i=0;i<=n-m;i++){
+		if(pq == t0){
+			int f=0;
+			for(int j=0;j<m;j++){
+				if(p[j] != t[i+j]){
+				    f=1;
+				}
+			}
+				if(!f){
+					cout<<"matching found at shift :"<<i<<endl;
+					f1 = 1;
+				}
+		}
+		if(i < n-m){
+		  t0 = (d*(t0 - ((t[i]-'0')*h) )+ t[i+m]-'0' )%q;
+		  
+		}
+		if(t0< 0 ){
+			t0 += q;
+		}
+	}
+	if(!f1)
+	cout<<"string match not found\n";
 }
+
+int main() {
+	
+	
+	int q=13;
+	string t="2359178604";
+	string p="591";
+    int d=10;
+    
+    rabin_karp(t,p,d,q);
+	return 0;
+}
+   
+ 
 
 // Finite Automata Pattern searching
 
