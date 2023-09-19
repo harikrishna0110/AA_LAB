@@ -1,3 +1,4 @@
+// Implement constant time algorithm to check if line segments P1P2 intersect with the line segment P3P4 or not.
 #include <bits/stdc++.h>
 using namespace std;
 #define point pair<int,int>
